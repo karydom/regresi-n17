@@ -1,0 +1,71 @@
+# regresi-n17
+############# Practica 1 ###########
+a<-4
+b<-3
+a+b
+suma<-a+b
+suma
+
+
+#operaciones de comparacion
+a>b #¿a es mayor que b?
+a>=a #a es mayor igual que a
+a<b #¿a es menor que b?
+a<=b
+a==b #¿a es igual a b?
+a==4 
+a!=b # a es diferente a b?
+
+####concepto de funcion###
+x<- abs(-2.5) ##abs es la funcion del valor absoluto
+x
+help(abs)
+#pedir ayuda en R 
+
+## para asignar valores a variables en R se usa una <-
+x<-"hola" ##variable tipo caracter
+z<- 6 #el igual solo funciona en una sola dirección 
+##Las variables que utilizaremos son tipo caracter y numerico
+ciudad<- "Toluca" #Una entrada
+nombres <- c("Karla" , "Rodrigo", "Miguel", "Samuel") #c:concatenar  , caracter y 4 entradas
+edad <- c(28,17,49,31) #numerico y 4 entradas
+##Se utiliza la función class para preguntarle a R que tipo de variable son
+class(nombres) ###tipo de variable
+class(edad)
+
+basel<- data.frame(nombres, edad) #se crea base de datos
+View(basel) ## Visualizar la base de datos 
+ls(basel)  ## ver lista de variables de la base de datos
+ 
+basel$edad ## $: para conocer los datos una sola variable 
+      # Edad de la base1 
+
+
+###Ejercicio: crear una variable de nombre sexo con 4 entradas 
+# donde hombre es 1 y mujer es el valor 2, la primera entrada 
+# es mujer y las otras 3 son hombres 
+
+sexo<- c(2,1,1,1) 
+base2<-data.frame(nombres,edad,sexo)
+View (base2)
+###tabulados
+table(base2$sexo) ## ver la frecuencia de la variable
+table(base2$edad)
+table(base2$nombres)
+
+
+palumnos<- c(40, 120, 60, 80) #alumnos fac economia
+etiq <- c("act", "eco", "rei", "nib")
+help(pie)
+
+pie(palumnos)
+
+pie(palumnos, etiq)
+
+pie(palumnos, etiq, main="Grafica de pie de 
+    la facultad de economía", 
+    sub="Fuente: Facultad de economía",
+    col= c("aquamarine1","red","green","yellow"), radius=1.5,
+    clockwise= TRUE, lty=18) #tambien poniendo numero del color, 
+#clockwise:sentido de la grafica acorde a las manecillas de reloj
+#lty:Tipo de linea de la grafica
