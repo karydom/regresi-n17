@@ -1,0 +1,86 @@
+#################################### EJERCICIO ##########################
+##Crear 3 ( Facultad, licenciatura y calificación alumnos) variables de 4 etradas
+##Facultad: Economía, ingenieria, arquitectura y derecho
+## Licenciatura: (Actuaria, ing. civil, arquitectura y derecho) 
+## Calificación alumnos( 6,4,10,8)
+## Verificar con r que ipo de variables son ( numerico, caracter)
+## borrar ñas variables facultad y licenciatura
+##Graficar con pie la variable calificaci+on
+##Incorporar los diversos argumentos utilizados  en clase
+Facultad <- c("Economia", "Ingenieria", "Arquitectura", "Derecho")
+Licenciatura <- c("Actuaria", "Ing.Civil", "Arquitectura", "Derecho")
+CalAlum <-  c(6, 4, 10, 8)
+class(Facultad)
+class(Licenciatura)
+class(CalAlum)
+rm(Facultad)
+rm(Licenciatura)
+
+etiq <- c("Actuaría", "Ing.Civil", "Arquitectura", "Derecho")
+
+pie(CalAlum, etiq, main="Grafica de pie de 
+    Calificaciones de Aumnos", 
+    sub="Fuente: UAEMex",
+    col= c("blue","red","green","yellow"), radius=1.0,
+    clockwise= TRUE, lty=5)
+
+
+
+
+
+################# VECTORES #############################
+a <- 2+3   #Vector longitud 1 
+b <- c(3,4) - c(6,1)  #Esta diferencia genera un vector 2 entradas
+b
+c <- c(4,5,6) * c(5,2,1)  ##Vector 3 entradas, hace la operación entrada por entrada
+c
+d <- c(1:50, 7, 99)
+length(d)
+length(c)
+
+#### Operaciones lógicas con vectores
+
+d>= 45 
+d== 50
+d!= 35 
+
+###Sucesiones con operador y función
+
+help (seq)  # seq=función para sucesiones 
+z<-seq(0,30,3) #Desde 0 hasta 30, irá de 3 en 3 , podemos agregar ( from=  , to=   , by=  )
+z <- seq (10)  # si le damos solo un argumento, será una secuencia de 1 hasta 10 de uno en uno
+z <- seq(2,10) # serie de uno en uno , desde 2 hasta 10 
+secuencia <- seq(1,10,by= 1)
+secuencia1 <- seq (1,100, by=10)
+sec2 <- seq(300,130, by=-3)
+sec2
+
+###################    33 muestras ####################
+ingreso <- sample( 20000:50000, 100) #primer argumento= de que rango quieres tu muestra aleatoria
+#segundo argumento= cuantos datos quieres 
+(ingreso <- sample( 20000:50000, 100)) #cuando va entre parentesis lo crea y lo llama en R
+ingreso>= 40000
+
+
+##vector1 donde contenga los datos arriba de 40000  TAREA
+vector1 <- ingreso[ingreso>=40000]
+vector1
+
+#despliega automaticamente el valor del objeto 
+aleatorios <- sample(1:10, 20)
+aleatorios <- sample(1:10, 20, replace= T) #muestra aleatoria con reemplazo
+
+#Para seleccionar la posición de un vector
+ingreso[50] # [] corchete para extraer lo que hay en la posicion que esta 
+#dentro del corchete de la variable ingreso
+ingreso [73]
+ingreso [seq(20,50,10)] #Datos del trabajador 20 al 50 de 10 en 10
+ingreso [30:43] #Pidiendo lo que hay en una función continua
+ingreso[ingreso>40000]
+ingreso[ingreso<2000]
+ingreso[ingreso>20000 & ingreso<30000] # &=y , |= O , ingreso mayores a 20000 y menores a 30000
+
+#### 3 repetir ####
+ss <- c(5, -7 , 9)
+rr <- rep(ss, times=5)
+rr
