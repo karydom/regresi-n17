@@ -8,11 +8,12 @@
 # 2) crear con la función matriz una matriz de 6 renglones y 3 columnas y preguntar por el dato de
 # la matriz en el renglon 3 y columna 3
 ##1)
+
 v <- 11:30
 v
-dim(v) <-c(4,5)
-rownames(v) <-c("Toluca","Pachuca","Guadalajara","Monterrey")
-colnames(v) <- c("escuela1","escuela2","escuela3","escuela4", "escuela5")
+dim(v) <-c(5,4)
+colnames(v) <-c("Toluca","Pachuca","Guadalajara","Monterrey")
+rownames(v) <- c("escuela1","escuela2","escuela3","escuela4", "escuela5")
 View(v)
 v["Toluca","escuela3"]
 v["Guadalajara","escuela5"]
