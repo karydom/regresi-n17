@@ -1,0 +1,97 @@
+###################### matrices del ejercicio #################
+# 1) crear una matriz con la función dim () de 4 columnas y 5 renglones
+## esta matriz esta basada en un vector que contiene estosdatos 11:31 
+## el nombre de los renglones es el siguiente (toluca,pachuca, gdl, mty)
+## el nombre de las columnas es (escuela1, escuela2, escuela3, escuela4, escuela5)
+## Incorporar el nombre a los renglones y las columnas de la matriz
+## identifique el dato de la escuela 3 de toluca, de la escuela 5 de gdl y la escuela 1 de pachuca
+# 2) crear con la función matriz una matriz de 6 renglones y 3 columnas y preguntar por el dato de
+# la matriz en el renglon 3 y columna 3
+
+##1)
+
+v <- 11:30
+v
+dim(v) <-c(5,4)
+colnames(v) <-c("Toluca","Pachuca","Guadalajara","Monterrey")
+rownames(v) <- c("escuela1","escuela2","escuela3","escuela4", "escuela5")
+View(v)
+v["escuela3","Toluca"]
+v["escuela5","Guadalajara"]
+v["escuela1","Pachuca"]
+
+##2)
+M <- matrix( 1:18, nrow = 6 , ncol = 3 , byrow = TRUE)
+M
+M[3,3]
+
+##############PRACTICA 4  #######################################
+
+###Para pegar un renglon a la matriz M
+v <- rbind(v, c(4,5,6,7)) #a la matriz le vamos a pegar un renglon (r)
+v
+rownames (v) <-c("escuela1","escuela2","escuela3","escuela4", "escuela5", "escuela6")
+v
+
+v <-cbind(v, c(14, 25, 36, 47, 99, 81)) #a la matriz le vamos a pegar una columna (c)
+v
+colnames(v) <-c("Toluca","Pachuca","Guadalajara","Monterrey","Jocotitlan")
+v
+
+### Para editar algun dato en dicha posición de de la matriz 
+
+v["escuela1","Jocotitlan"] <- 28  #cambiar el dato en esa posición por el dato 28
+edit(v) #para editar la matriz 
+
+##### Para multiplicar matrices ######
+
+j%*%i 
+####### Para la transpuesta de una matriz se utiliza t()
+t(il)
+
+################### DATA FRAME ##################
+nombres <- c( "sergio" , "juan", "rocío", "jessica") ##creo vectores
+edad <- c(30,43,21,18)
+altura <- c(170,165,175,172)
+salario <- c(3000, 4500, 2200, 4300) 
+basem <- data.frame(nombres, edad, altura, salario)
+View (basem)
+basem[4,3] <- 178 ## asigno el valor 178 a la posición del 4° renglon 3a columna
+basem$salario * 2.2 -> basem$salario ## multiplico cada dato de la variable salario
+# de la base de datos basem por 2.2 , reemplazar la variable
+basem
+peso <- c(83.2 , 75.2 , 69.3, 70.5) #nuevo vector 
+basem <- data.frame(nombres, edad, altura, salario, peso)
+# Corremos de nuevo la linea 63: basem$salario * 2.2 -> basem$salario
+basem
+
+basem$peso*1.2 -> basem$peso # Es lo mismo que basem$peso<-basem$peso*1.2
+basem
+
+###Redondeo
+round(basem$peso, 2) -> basem$peso 
+basem
+
+basem$escol <- c("prepa" , "lic", "ninguno" "prim") #incorporarle una nueva variable(columna)
+# con dichos valores
+basem$sexo <-c(1 , 1, 2,2)
+basem
+
+table(basem$sexo) #generar una tabla de frecuencias de la variable sexo 
+attach(basem) # A partir de esta línea todas las variables que llamemos es de la base "basem"
+table(sexo)
+detach(basem) #A partir de esa linea ya no necesariamente son de la base "basem", para eliminar
+#la  función atach
+
+##Para nstalar paqueterias desde internet 
+install.packages("foreing") #esta paqueteria es para poder importar o exportar base de datos en R
+install.packages("questionr")#expandir frecuencias de base de datos muestrales
+install.packages("car") #es para regresión
+#Instalación multiple
+install.packages(c("foreign","questionr","car"))
+#Dentro de cada paquete vienen mutiples funciones que solo las podemos usar cuando mandamos llamar
+#el paquete.
+###Para mandar llamar una paqueteria instalada library() y require() son funciones equivalentes 
+library(foreign)
+library(questionr)
+require(car) 
