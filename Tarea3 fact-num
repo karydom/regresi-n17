@@ -1,0 +1,29 @@
+require(foreign)
+mti2015 <- read.dbf("C:/Users/ARTURO/Desktop/mti2015_05_17_sdem_precodificado.DBF" )
+#mti=Modulo de trabajo infantil, 2015, leer la base de datos , se copia la dirección
+table(mti2015$SEX)
+install.packages("questionr")
+require(questionr)
+wtd.table(mti2015$SEX, weights=mti2015$FAC_MTI)  #Para expandir la muestra 
+
+ls(mti2015) ## nos muestra las variables 
+sum(mti2015$FAC_MTI)  #Sumarme todos los datos de esa columna 
+table(mti2015$R_DEF_ENOE)
+table(mti2015$CS_P12)
+wtd.table(mti2015$CS_P12, weights=mti2015$FAC_MTI)
+wtd.table(mti2015$R_DEF_ENOE, weights=mti2015$FAC_MTI)
+wtd.table(mti2015$EDA, weights=mti2015$CS_P12) #Una tabla con dos variables
+#Renglones del 1 hasta el 17 y en la columna 1,2, y 9
+########Filtrar/ seleccionar datos de la bases de datos #######
+edomex <- subset(mti2015, mti2015$ENT == 15)  #solo los datos de la entidad 15 Estado de México, 
+# solo población del Estado de México 
+edomexmuj <- subset(mti2015, mti2015$ENT == 15 & mti2015$SEX == 2) #Mujeres del Estado de México
+agyzac <- subset(mti2015, mti2015$ENT == "01" | mti2015$ENT == 32) #Personas de Aguacalientes o Zacatecas
+table(aqyzac$ENT)
+
+as.numeric(mti2015$ENT)##Convertir una varible que es caracter a numerica
+class(mti2015$ENT) #factor: una variable que contiene a los numéricos 
+rm(ENT)
+#TAREA: convertir un factor a numero
+mti2015$ENT <- as.numeric(as.character(mti2015$ENT)) 
+class(mti2015$ENT)
