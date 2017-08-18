@@ -1,0 +1,74 @@
+##########################Práctica 7 , CONTINUACIÓN DE LA 6 ############################
+
+################Bajar base de datos forma conrta 
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/mti/2015/microdatos/mti2015_bases_conapo_dbf.zip",temporal)
+files=unzip(temporal,list=TRUE)$Name
+unzip(temporal,files=files[grepl("dbf",files)])
+library(foreign)
+files
+mti15 <-data.frame(read.dbf("mti2015_05_17_sdem_precodificado.DBF"))
+View(mti15)
+class(mti15$ENT)
+mti15$ENT <- as.numeric(mti15$ENT)
+class(mti15$ENT)
+
+######################Etiquetar una variable #########poner nombres a las categorias
+#Agrupar datos 
+table(mti15$CS_P15)
+##Etiquetar  categorias en otra variable, poner nombres a las categorias
+mti15$CS_P15 <- factor(mti15$CS_P15, levels=c(1,2,3,4), labels=c("Primaria","Secundaria",
+                                                                 "Preparaoria", "No sabe")) #Etiquetandolo a la misma variable
+table(mti15$CS_P15)
+#Etiquetar la variable rama 
+mti15$RAMA <- factor(mti15$RAMA, levels=c(1,2,3,4,5,6,7), labels=c("Agropecuario","Construcción",
+                                                                   "Indust Manu", "Comercio","Servicios", "Otros", "No espec"))
+table(mti15$RAMA)
+#################Recodificar el nombre de la variable 
+mti15$RAMA <- as.numeric ( mti15$RAMA)
+class(mti15$RAMA)
+
+mti15$RAMA1[mti15$RAMA == 1] <- 1  #Aqui no hay ningun cambio
+mti15$RAMA1[mti15$RAMA == 2 | mti15$RAMA == 3 ] <- 2
+mti15$RAMA1[mti15$RAMA == 4 | mti15$RAMA == 5  ] <- 3
+mti15$RAMA1[mti15$RAMA == 6 | mti15$RAMA == 7 ] <- 4
+
+mti15$RAMA1 <- factor(mti15$RAMA1, levels=c(1,2,3,4), labels=c("Primario","Secundario",
+                                                               "Terciario", "NE")) 
+table(mti15$RAMA1)
+table (mti15$EDA)
+######EJERICIO , Recodificar la variable EDA en una nueva variable que se llame GPOEDA y 
+#etiquetarla . Esta recodificación debe quedar en 4 lineas de script
+#La recodificación es la siguiente:
+#5,6,7 =1 niño , 8,9,10,11 =2 Pre ado  , 12,13,14=3 Ado , 15,16,17=4 Joven 
+#Una vez realizado el ejercicio generar una tabla con datos expandidos y exportada a excel 
+
+mti15$EDAD[mti15$EDA =="05" | mti15$EDA =="06" | mti15$EDA == "07"] <- 1  
+mti15$EDAD[mti15$EDA =="08" | mti15$EDA =="09" | mti15$EDA =="10" | mti15$EDA == "11" ] <- 2
+mti15$EDAD[mti15$EDA =="12" | mti15$EDA =="13" | mti15$EDA =="14" ] <- 3
+mti15$EDAD[mti15$EDA =="15" | mti15$EDA =="16" | mti15$EDA =="17" ] <- 4
+
+mti15$EDAD <- factor(mti15$EDAD, levels=c(1,2,3,4), labels=c("Niñ@s","Pre Ado",
+                                                               "Adol", "Joven")) 
+table(mti15$EDAD)
+install.packages("questionr")
+require(questionr)
+wtd.table(mti2015$EDAD, weights=mti2015$FAC_MTI)
+
+
+#Solución por el maestro 
+# cambiar variable a cacter y luego a número 
+mti15$EDA<- as.numeric(as.character(mti15$EDA))
+mti15$GPOEDA [mti15$EDA >= 5 & mti15$EDA <=7 ] <- 1 #Poner un rango
+mti15$GPOEDA [mti15$EDA >= 8 & mti15$EDA <=11 ] <- 2
+mti15$GPOEDA [mti15$EDA >= 12 & mti15$EDA <=14 ] <- 3
+mti15$GPOEDA [mti15$EDA >= 15 & mti15$EDA <=17 ] <- 4
+table(mti15$GPOEDA)
+mti15$GPOEDA <- factor(mti15$GPOEDA, levels=c(1,2,3,4), labels=c("Niñ@s","Pre Ado",
+                                                             "Adol", "Joven"))
+require(questionr)
+t <- wtd.table(mti$GPOEDA , weights=mti$FAC_MTI)
+##Exportar a Excel 
+write.csv(t,files="Practica.csv")
+
+#TAREA= Abrir en un mismo archivo, diferentes hojas con esa función
