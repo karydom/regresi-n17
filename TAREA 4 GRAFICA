@@ -1,0 +1,51 @@
+#######################TAREA
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/mti/2015/microdatos/mti2015_bases_conapo_dbf.zip",temporal)
+files=unzip(temporal,list=TRUE)$Name
+unzip(temporal,files=files[grepl("dbf",files)])
+library(foreign)
+files
+mti15 <-data.frame(read.dbf("mti2015_05_17_sdem_precodificado.DBF"))
+View(mti15)
+
+table(mti15$CS_P15)
+mti15$CS_P15 <- factor(mti15$CS_P15, levels=c(1,2,3,4), labels=c("Primaria","Secundaria",
+                                                                 "Preparaoria", "No sabe")) 
+mti15$RAMA <- factor(mti15$RAMA, levels=c(1,2,3,4,5,6,7), labels=c("Agropecuario","Construcción",
+                                                                   "Indust Manu", "Comercio","Servicios", "Otros", "No espec"))
+
+mti15$RAMA <- as.numeric ( mti15$RAMA)
+
+class(mti15$RAMA)
+
+mti15$RAMA1[mti15$RAMA == 1] <- 1  
+mti15$RAMA1[mti15$RAMA == 2 | mti15$RAMA == 3 ] <- 2
+mti15$RAMA1[mti15$RAMA == 4 | mti15$RAMA == 5  ] <- 3
+mti15$RAMA1[mti15$RAMA == 6 | mti15$RAMA == 7 ] <- 4
+
+mti15$RAMA1 <- factor(mti15$RAMA1, levels=c(1,2,3,4), labels=c("Primario","Secundario",
+                                                               "Terciario", "NE")) 
+table(mti15$RAMA1)
+table (mti15$EDA)
+
+mti15$EDA<- as.numeric(as.character(mti15$EDA))
+mti15$GPOEDA [mti15$EDA >= 5 & mti15$EDA <=7 ] <- 1 #
+mti15$GPOEDA [mti15$EDA >= 8 & mti15$EDA <=11 ] <- 2
+mti15$GPOEDA [mti15$EDA >= 12 & mti15$EDA <=14 ] <- 3
+mti15$GPOEDA [mti15$EDA >= 15 & mti15$EDA <=17 ] <- 4
+table(mti15$GPOEDA)
+
+mti15$GPOEDA <- factor(mti15$GPOEDA, levels=c(1,2,3,4), labels=c("Niñ@s","Pre Adolescente",
+                                                                 "Adolescente", "Joven"))
+require(questionr)
+
+t <- wtd.table(mti15$GPOEDA , weights=mti15$FAC_MTI)
+
+t<-t/1000000
+
+
+#########GRAFICA DE BARRAS ##########
+barplot(t, ylab="Frecuencia (Millones) " , xlab="Grupos de Edad" ,
+        main="TRABAJO INFANTIL",sub= "Grupos por edad de niños que trabajan, INEGI, 2015",
+        col=rainbow(6) , border = TRUE, space = FALSE, 
+        legend.text=c("Niñ@s","Pre Adol","Adole", "Joven"),font.axis=4)
